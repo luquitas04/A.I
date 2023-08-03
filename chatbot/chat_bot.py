@@ -17,7 +17,7 @@ pares = [
 
 # Inicializamos el modelo GPT-Neo
 chatbotm_model = pipeline("text-generation", model="EleutherAI/gpt-neo-1.3B")
-
+aaaa
 # Funcion que ejecuta el programa
 def chat():
     print("Hola, soy Wizi. ¿En qué puedo ayudarte?")
