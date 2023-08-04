@@ -39,54 +39,6 @@ with mp_hands.Hands(
                     # Dibujar circulos en los puntos de referencia 
                     cv2.circle(image, pixel_coords, 5, (0,255,0), -1)
                 
-                # hand_landmarks_list = [
-                #     mp_hands.HandLandmark.WRIST,
-                #     mp_hands.HandLandmark.THUMB_CMC,
-                #     mp_hands.HandLandmark.THUMB_MCP,
-                #     mp_hands.HandLandmark.THUMB_IP,
-                #     mp_hands.HandLandmark.THUMB_TIP,
-                #     mp_hands.HandLandmark.INDEX_FINGER_MCP,
-                #     mp_hands.HandLandmark.INDEX_FINGER_PIP,
-                #     mp_hands.HandLandmark.INDEX_FINGER_TIP,
-                #     mp_hands.HandLandmark.MIDDLE_FINGER_MCP,
-                #     mp_hands.HandLandmark.MIDDLE_FINGER_PIP,
-                #     mp_hands.HandLandmark.MIDDLE_FINGER_TIP,
-                #     mp_hands.HandLandmark.RING_FINGER_MCP,
-                #     mp_hands.HandLandmark.RING_FINGER_PIP,  
-                #     mp_hands.HandLandmark.RING_FINGER_TIP,
-                #     mp_hands.HandLandmark.PINKY_MCP,
-                #     mp_hands.HandLandmark.PINKY_PIP,
-                #     mp_hands.HandLandmark.PINKY_TIP,
-                # ]                                   
-                # for i in range(0, len(hand_landmarks_list) -1 , 4):
-                #     for j in range(i,i + 4):
-                #         if (
-                #             not results.multi_hand_landmarks[0].landmark[hand_landmarks_list[j]]
-                #             or not results.multi_hand_landmarks[0].landmark[hand_landmarks_list[j + 1]]
-                #         ):
-                #             break
-                #         start_point = (
-                #                 int(
-                #                     results.multi_hand_landmarks[0].landmark[hand_landmarks_list[j]].x
-                #                     * image.shape[1]
-                #                 ),
-                #                 int(
-                #                     results.multi_hand_landmarks[0].landmark[hand_landmarks_list[j]].y
-                #                     * image.shape[0]
-                #                 ),
-                #             )
-                #         end_point = (
-                #                 int(
-                #                     results.multi_hand_landmarks[0].landmark[hand_landmarks_list[j + 1]].x
-                #                     * image.shape[1]
-                #                 ),
-                #                 int(
-                #                     results.multi_hand_landmarks[0].landmark[hand_landmarks_list[j + 1]].y
-                #                     * image.shape[0]
-                #                 ),
-                #             )
-                #         cv2.line( image, start_point, end_point, (0,255,0),2 )
-
                 # Dibujamos las lineas
                 connections = mp_hands.HAND_CONNECTIONS
                 for connection in connections:
@@ -119,6 +71,28 @@ with mp_hands.Hands(
                                 ),
                             )
                     cv2.line( image, start_coords, end_coords, (0,255,0),2 )
+
+                # extended_fingers = 0
+                # finger_tip_points = [
+                #     mp_hands.HandLandmark.THUMB_TIP,
+                #     mp_hands.HandLandmark.INDEX_FINGER_TIP,
+                #     mp_hands.HandLandmark.MIDDLE_FINGER_TIP,                   
+                #     mp_hands.HandLandmark.RING_FINGER_TIP,
+                #     mp_hands.HandLandmark.PINKY_TIP
+                # ]
+                # for finger_tip in finger_tip_points:
+                #     tip_coords = (
+                #         int(results.multi_hand_landmarks[0].landmark[finger_tip].x * image.shape[1]),
+                #         int(results.multi_hand_landmarks[0].landmark[finger_tip].y * image.shape[0])  
+                #     )
+                    
+                    
+                #     if results.multi_hand_landmarks[0].landmark[finger_tip].y < results.multi_hand_landmarks[0].landmark[mp_hands.HandLandmark.WRIST].y:
+                #         extended_fingers +=1
+                #         cv2.circle(image, tip_coords,5,(0,0,255),-1)
+                    
+                # cv2.putText(image, f"Dedos extendidos: {extended_fingers}",(10,30),cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,0),2)
+
                 # Mostrar la imagen con el seguimiento de la mano
                 cv2.imshow("Hand Tracking", image)
 
@@ -126,6 +100,6 @@ with mp_hands.Hands(
                     break
         
         # Liberar la cámara y cerrar las ventanas
-        cap.release()
-        cv2.destroyAllWindows()
+        # cap.release()
+        # cv2.destroyAllWindows()
         # cv2.waitKey(5000)
